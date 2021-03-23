@@ -1,0 +1,123 @@
+<% include partials/_header %>
+
+
+    <title>W3.CSS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- <pre> <%= tasks %> </pre> -->
+
+    <body>
+
+        <div class="w3-container">
+            <h2>Sistema de Gestión de Usuarios</h2>
+            <p>Este sistema permite dar de alta, editar y cambiar el estado de un usuario</p>
+
+            <div class="w3-bar w3-black">
+                <button class="w3-bar-item w3-button tablink w3-red" onclick="abrirContainer(event,'users')">Ver Usuarios</button>
+                <button class="w3-bar-item w3-button tablink" onclick="abrirContainer(event,'register')">Registrar Usuarios</button>
+            </div>
+
+            <div id="users" class="w3-container w3-border tab">
+                <div class="container" style="  margin: auto;
+                width: 50%;
+                padding: 10px;">
+                    <br>
+                    <!-- LIST -->
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Contraseña</th>
+                                    <th>Edad</th>
+                                    <th>Operación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(var i=0; i < tasks.length; i++) { %>
+                                    <tr>
+                                        <td>
+                                            <%= i + 1%>
+                                        </td>
+                                        <td><strong><%= tasks[i].usuario%></strong></td>
+                                        <td>
+                                            <%= tasks[i].contraseña %>
+                                        </td>
+                                        <td><strong><%= tasks[i].edad%></strong></td>
+                                        <td>
+                                            <a class="<%= tasks[i].status ? 'btn btn-success' : 'btn btn-dark'%>" href="/turn/<%= tasks[i]._id %>">Activo</a>
+                                            <a href="/delete/<%= tasks[i]._id %>" class="btn btn-danger">
+                                             Borrar Usuario
+                                            </a>
+                                            <a href="/edit/<%= tasks[i]._id %>" class="btn btn-info">
+                                            Editar Usuario
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="register" class="w3-container w3-border tab" style="display:none">
+                <div class="container">
+                    <br>
+                    <div class="row">
+                        <!--FORM-->
+                        <div class="col-md-5" style="  margin: auto;
+                        width: 50%;
+                        padding: 10px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="/add" method="post">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" name="usuario" placeholder="Usuario">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="contraseña" cols="80" placeholder="Contraseña"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" name="edad" placeholder="Edad">
+                                        </div>
+                                        <button class="btn btn-primary btn-block" type="submit">
+                          Agregar Usuario
+                          <br>
+            
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+            
+            
+                    </div>
+            
+                </div>
+                <br>
+            </div>
+
+
+                <script>
+                    function abrirContainer(evt, tabName) {
+                        var i, x, tablinks;
+                        x = document.getElementsByClassName("tab");
+                        for (i = 0; i < x.length; i++) {
+                            x[i].style.display = "none";
+                        }
+                        tablinks = document.getElementsByClassName("tablink");
+                        for (i = 0; i < x.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+                        }
+                        document.getElementById(tabName).style.display = "block";
+                        evt.currentTarget.className += " w3-red";
+                    }
+                </script>
+
+
+                <% include partials/_footer%>
